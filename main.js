@@ -497,10 +497,9 @@ var rankNamespace = function () {
                    if (xmlhttp.readyState == 4) {
 
                         if ( JSON.parse(xmlhttp.responseText).tracks.total == 0) {
-                            
                             if (d.Title == "Nothing Compares 2 U") {
-                                songDetail[d.Title] = { preview: "mp3/nothingc2u.mp3", cover: "img/nothingc2u.jpg" };
-                            } else { // No information found..
+                                songDetail[d.Title] = { preview: "nothingc2u.mp3", cover: "nothingc2u.jpg" };
+                            } else { // Otherwise we don't have this song's information..
                                songDetail[d.Title] = { preview: "", cover: "" }; 
                             }
                         } else {

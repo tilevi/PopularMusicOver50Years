@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+		<title>Popular Music and Genres over Half a Century</title>
+        
+        <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="main.css">
+	</head>
+    
+    <div id="wrap">
+
+        <div id="main">
+        
+            <center>
+                <h1>Popular Music and Genres over Half a Century</h1>
+
+                <div class="container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#centerDiv">Main Visualization</a></li>
+                        <li><a data-toggle="tab" href="#centerDiv2">Bar Chart</a></li>
+                    </ul>
+                </div>
+            </center>
+
+            <!-- Speaker icon -->
+            <img id="audioIcon" src="img/stop.png" class="speaker hidden"/>
+
+            <!-- Dummy speaker icon -->
+            <img id="dummyIcon" src="img/play.png" class="speaker hidden"/>
+
+            <!-- Audio player -->
+            <audio id="player" onended="ns.previewFinished();">
+                <source src="" type="audio/mp3"/>
+            </audio>
+
+            <center>
+                <div class="tab-content">
+                    <div id="centerDiv" class="tab-pane fade in active"></div>
+                    <div id="centerDiv2" class="tab-pane fade"></div>
+                </div>
+            </center>
+
+            <script type="text/javascript" src="main.js"></script>
+            <script type="text/javascript" src="bar.js"></script>
+            
+
+            <!-- Modal -->
+            <div class="modal fade bannerformmodal" tabindex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
+                <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <center><img src="spotify.png" width="225px"/></center>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div class="songsLeft">
+                            <b><u>1965</u></b>
+                        
+                            <a target="_blank" href="https://open.spotify.com/track/2XkuSbp5say8nZW8g6156Z">Wooly Bully - Sam The Sham and The Pharaohs</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3aSWQJcWnnqgwYbAgidvlV">I Can't Help Myself (Sugar Pie, Honey Bunch) - Four Tops</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/2PzU4IB8Dr6mxV3lHuaG34">(I Can't Get No) Satisfaction - Rolling Stones</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/36ckFm0oicmvX8bWEErIHd">You Were On My Mind - We Five</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/5GMw6X6BbCDGO9gApQYRSa">You've Lost That Lovin' Feelin' - Righteous Brothers</a>
+
+                            <b><u>1970</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/6l8EbYRtQMgKOyc1gcDHF9">Bridge Over Troubled Water - Simon and Garfunkel</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/79SE4x5ZROfEqaN12nXFHj">(They Long To Be) Close To You - Carpenters</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3LQPTJEqOfljGBxmpgUnoC">American Woman - Guess Who</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/1KkwByi6c9dFFmUTcgMODw">Raindrops Keep Fallin' On My Head - B.J. Thomas</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/7bfWzWm54GVlb8XBKIb9Zx">War - Edwin Starr</a>
+                            
+                            <b><u>1975</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/1f4iVGDitHYMVBaoc9GXO2">Love Will Keep Us Together - Captain and Tennille</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/0VwTeYNjcl30DyQlt3GPe0">Rhinestone Cowboy - Glen Campbell</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3KFSoXU5dom16qdvKEAMsx">Philadelphia Freedom - Elton John</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3awuorsQsio2PUOvzq3hpd">Before The Next Teardrop Falls - Freddy Fender</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/2cqVnbTiYgdun186IbDRwm">My Eyes Adored You - Frankie Valli</a>
+
+                            
+                            <b><u>1980</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/0vLwL4xuJ3s7SeaCdvMqkY">Call Me - Blondie</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/4gMgiXfqyzZLMhsksGmbQV">Another Brick In The Wall, Pt. 2 - Pink Floyd</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/56BSwBKWHYldQOgYLHiehs">Magic - Olivia Newton-John</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/7oOOI85fVQvVnK5ynNMdW7">Rock With You - Michael Jackson</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/2gFnSurc2aUja58m4Jq41f">Do That To Me One More Time - Captain and Tennille</a>
+                        
+                        
+                            <b><u>1985</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/4jDmJ51x1o9NZB5Nxxc7gY">Careless Whisper - George Michael</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/1ZPlNanZsJSPK5h9YZZFbZ">Like A Virgin - Madonna</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/0ikz6tENMONtK6qGkOrU3c">Wake Me Up Before You Go-Go - Wham!</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/1JLn8RhQzHz3qDqsChcmBl">I Want To Know What Love Is - Foreigner</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/0wFpcfq9mq5WzoIWnkK0hj">I Feel For You - Chaka Khan</a>
+
+
+                            <b><u>1990</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/4VZDv8sASBS8UruUBGTFdk">Hold On - Wilson Phillips</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/6qB7YcFpeBEQa0D6QO482y">It Must Have Been Love - Roxette</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/6m59VvDUi0UQsB2eZ9wVbH">Poison - Bell Biv Devoe</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/27QvYgBk0CHOVHthWnkuWt">Vogue - Madonna</a>
+                        
+                        </div>
+                        
+                        <div class="songsRight">
+                            <b><u>1995</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3u9fHuAtjMY1RW2mZfO4Cf">Gangsta's Paradise - Coolio ft. L.V.</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/6qspW4YKycviDFjHBOaqUY">Waterfalls - TLC</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/1aWV3uY3SIEZVbmv45oFWS">Creep - TLC</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3YKptz29AsOlm7WAVnztBh">Kiss From A Rose - Seal</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/7MYmo0JJJDmu4MZTSAF9y3">On Bended Knee - Boyz II Men</a>
+
+
+                            <b><u>2000</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3y4LxiYMgDl4RethdzpmNe">Breathe - Faith Hill</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/0n2SEXB2qoRQg171q7XqeW">Smooth - Santana feat. Rob Thomas</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3XKIUb7HzIF1Vu9usunMzc">Maria Maria - Santana feat. The Product GandB</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/6ctr1K7KzKErxbfGAynL8A">I Wanna Know - Joe</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/4cKGldbhGJniI8BrB3K6tb">Everything You Want - Vertical Horizon</a>
+
+
+                            <b><u>2005</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3LmvfNUQtglbTrydsdIqFU">We Belong Together - Mariah Carey</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/6RcQOut9fWL6FSqeIr5M1r">Hollaback Girl - Gwen Stefani</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3ibKnFDaa3GhpPGlOUj7ff">Let Me Love You - Mario</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3xrn9i8zhNZsTtcoWgQEAd">Since U Been Gone - Kelly Clarkson</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/7uKcScNXuO3MWw6LowBjW1">One, Two Step - Ciara feat. Missy Elliott</a>
+
+
+                            <b><u>2010</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/5OMwQFBcte0aWFJFqrr5oj">TiK ToK - Ke$ha</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/11EX5yhxr9Ihl3IN1asrfK">Need You Now - Lady Antebellum</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/0KpfYajJVVGgQ32Dby7e9i">Hey, Soul Sister - Train</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/6tS3XVuOyu10897O3ae7bi">California Gurls - Katy Perry feat. Snoop Dogg</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/3r04p85xiJh9Wqk59YDYdc">OMG - Usher feat. will.i.am</a>
+
+
+                            <b><u>2015</u></b>
+
+                            <a target="_blank" href="https://open.spotify.com/track/32OlwWuMpZ6b0aN2RZOeMS">Uptown Funk - Mark Ronson feat. Bruno Mars</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/34gCuhDGsG4bRPIf9bb02f">Thinking Out Loud - Ed Sheeran</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/7wqSzGeodspE3V6RBD5W8L">See You Again - Wiz Khalifa feat. Charlie Puth</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/2d8JP84HNLKhmd6IYOoupQ">Trap Queen - Fetty Wap</a>
+
+                            <a target="_blank" href="https://open.spotify.com/track/2iuZJX9X9P0GKaE93xcPjk">Sugar - Maroon 5</a>
+                        </div>
+                        <br style="clear: both" />
+                    </div>
+                </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+    <div id="footer">
+        <div id="textbox">
+            <div class="alignleft">Created by: Tristan Iverson in collaboration with Suresh K Lodha<br><u>Files</u>:
+                <ul>
+                    <li>index.html</li>
+                    <li>main.css</li>
+                    <li>popular_music.json</li>
+                    <li>main.js, bar.js</li>
+                    <li>nothingc2u.mp3</li>
+                    <li>play.png, stop.png, nothingc2u.jpg, spotify.png</li>
+                </ul>
+            </div>
+            <div class="aligncenter"><u>Data Sources</u>:<br><a target="_blank" href="http://www.billboard.com">billboard.com</a>: Year-End Hot 100 Singles<br><a target="_blank" href="http://www.apple.com/itunes/">iTunes by Apple</a>: Song genres<br><a target="_blank" href="https://developer.spotify.com/web-api/">Spotify (Web API)</a>: Album covers and 30-second song previews<br>Feel free to <a href="#" data-toggle="modal" data-target="#bannerformmodal">stream the full-length tracks on Spotify!</a></div>
+            
+            <div class="alignright"><u>Code References</u>: <br><a target="_blank" href="http://www.cssstickyfooter.com/using-sticky-footer-code.html">CSS Sticky Footer</a><br><a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>, <a target="_blank" href="https://www.bootstrapcdn.com/">BootstrapCDN</a>, and <a target="_blank" href="https://jquery.com/">jQuery</a><br><a target="_blank" href="http://ericsaupe.com/tag/bootstrap-3-tabs-example-ajax/">Bootstrap Tabs with Dynamic Content Loading by Eric Saupe</a><br><a href="https://bl.ocks.org/mbostock/3943967" target="_blank">Stacked-to-Grouped Bars by Mike Bostock</a><br><a target="_blank" href="http://stackoverflow.com/questions/10692100/invoke-a-callback-at-the-end-of-a-transition">D3 Transition Callback by kashesandr and Mike Bostock</a>
+            <br>
+            <a href="http://stackoverflow.com/questions/22565247/bootstrap-modal-link" target="_blank">Bootstrap Modal Link code snippet by Nimmi</a>
+                
+            <br>
+            <a href="http://www.w3schools.com/bootstrap/bootstrap_modal.asp" target="_blank">Bootstrap Modal Plugin code snippet from w3schools.com</a>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</html>

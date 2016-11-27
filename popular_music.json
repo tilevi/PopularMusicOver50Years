@@ -1,0 +1,408 @@
+{
+    "years": [
+                {
+                    "year": "1965",
+                    "songs": [
+                        {
+                            "Title": "Wooly Bully",
+                            "Artist": "Sam The Sham and The Pharaohs",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "I Can't Help Myself",
+                            "Artist": "Four Tops",
+                            "Genre": "R&B/Soul"
+                        },
+                        {
+                            "Title": "(I Can't Get No) Satisfaction",
+                            "Artist": "Rolling Stones",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "You Were On My Mind",
+                            "Artist": "We Five",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "You've Lost That Lovin' Feelin'",
+                            "Artist": "Righteous Brothers",
+                            "Genre": "Pop"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [5, 4, 3, 2, 1],
+                            "Rock": [2, 5, 1, 4, 3],
+                            "R&B/Soul": [5, 1, 4, 3, 2]
+                        }
+                    }
+                },
+                {
+                    "year": "1970",
+                    "songs": [
+                        {
+                            "Title": "Bridge Over Troubled Water",
+                            "Artist": "Simon and Garfunkel",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "(They Long To Be) Close To You",
+                            "Artist": "Carpenters",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "American Woman",
+                            "Artist": "Guess Who",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "Raindrops Keep Fallin' On My Head",
+                            "Artist": "B.J. Thomas",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "War",
+                            "Artist": "Edwin Starr",
+                            "Genre": "R&B/Soul"
+                        } 
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [2, 5, 4, 1, 3],
+                            "Rock": [5, 2, 1, 4, 3],
+                            "R&B/Soul": [5, 4, 3, 2, 1]
+                        }
+                    }
+                },
+                {
+                    "year": "1975",
+                    "songs": [
+                        {
+                            "Title": "Love Will Keep Us Together",
+                            "Artist": "Captain and Tennille",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Rhinestone Cowboy",
+                            "Artist": "Glen Campbell",
+                            "Genre": "Country"
+                        },
+                        {
+                            "Title": "Philadelphia Freedom",
+                            "Artist": "Elton John",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "Before The Next Teardrop Falls",
+                            "Artist": "Freddy Fender",
+                            "Genre": "Country"
+                        },
+                        {
+                            "Title": "My Eyes Adored You",
+                            "Artist": "Frankie Valli",
+                            "Genre": "Pop"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [2, 5, 4, 3, 1],
+                            "Rock": [5, 4, 1, 3, 2 ],
+                            "Country": [5, 2, 4, 1, 3]
+                        }
+                    }
+                },
+                {
+                    "year": "1980",
+                    "songs": [
+                        {
+                            "Title": "Call Me",
+                            "Artist": "Blondie",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "Another Brick In The Wall, Pt. 2",
+                            "Artist": "Pink Floyd",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "Magic",
+                            "Artist": "Olivia Newton-John",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Rock With You",
+                            "Artist": "Michael Jackson",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Do That To Me One More Time",
+                            "Artist": "Captain and Tennille",
+                            "Genre": "Pop"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [5, 4, 3, 2, 1],
+                            "Rock": [2, 1, 5, 4, 3]
+                        }
+                    }
+                },
+                {
+                    "year": "1985",
+                    "songs": [
+                       {
+                            "Title": "Careless Whisper",
+                            "Artist": "George Michael",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Like A Virgin",
+                            "Artist": "Madonna",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Wake Me Up Before You Go-Go",
+                            "Artist": "Wham!",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "I Want To Know What Love Is",
+                            "Artist": "Foreigner",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "I Feel For You",
+                            "Artist": "Chaka Khan",
+                            "Genre": "R&B/Soul"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [3, 2, 1, 5, 4],
+                            "Rock": [5, 4, 3, 1, 2],
+                            "R&B/Soul": [5, 4, 3, 2, 1]
+                        }
+                    }
+                },
+                {
+                    "year": "1990",
+                    "songs": [
+                        {
+                            "Title": "Hold On",
+                            "Artist": "Wilson Phillips",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "It Must Have Been Love",
+                            "Artist": "Roxette",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Nothing Compares 2 U",
+                            "Artist": "Sinead O'Connor",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Poison",
+                            "Artist": "Bell Biv Devoe",
+                            "Genre": "R&B/Soul"
+                        },
+                        {
+                            "Title": "Vogue",
+                            "Artist": "Madonna",
+                            "Genre": "Pop"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [4, 3, 2, 5, 1],
+                            "R&B/Soul": [5, 4, 3, 1, 2]
+                        }
+                    }
+                },
+                {
+                    "year": "1995",
+                    "songs": [
+                        {
+                            "Title": "Gangsta's Paradise",
+                            "Artist": "Coolio feat. L.V.",
+                            "Genre": "Hip-Hop/Rap"
+                        },
+                        {
+                            "Title": "Waterfalls",
+                            "Artist": "TLC",
+                            "Genre": "R&B/Soul"
+                        },
+                        {
+                            "Title": "Creep",
+                            "Artist": "TLC",
+                            "Genre": "R&B/Soul"
+
+                        },
+                        {
+                            "Title": "Kiss From A Rose",
+                            "Artist": "Seal",
+                            "Genre": "R&B/Soul"
+                        },
+                        {
+                            "Title": "On Bended Knee",
+                            "Artist": "Boyz II Men",
+                            "Genre": "R&B/Soul"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Hip-Hop/Rap": [1, 5, 4, 3, 2],
+                            "R&B/Soul": [5, 4, 3, 2, 1]
+                        }
+                    }
+                },
+                {
+                    "year": "2000",
+                    "songs": [
+                        {
+                            "Title": "Breathe",
+                            "Artist": "Faith Hill",
+                            "Genre": "Country"
+                        },
+                        {
+                            "Title": "Smooth",
+                            "Artist": "Santana feat. Rob Thomas",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "Maria Maria",
+                            "Artist": "Santana feat. The Product GandB",
+                            "Genre": "Rock"
+                        },
+                        {
+                            "Title": "I Wanna Know",
+                            "Artist": "Joe",
+                            "Genre": "R&B/Soul"
+                        },
+                        {
+                            "Title": "Everything You Want",
+                            "Artist": "Vertical Horizon",
+                            "Genre": "Pop"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [5, 4, 3, 2, 1],
+                            "Rock": [5, 2, 1, 3, 4],
+                            "Country": [1, 5, 4, 3, 2],
+                            "R&B/Soul": [5, 4, 3, 1, 2]
+                        }
+                    }
+                },
+                {
+                    "year": "2005",
+                    "songs": [
+                        {
+                            "Title": "We Belong Together",
+                            "Artist": "Mariah Carey",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Hollaback Girl",
+                            "Artist": "Gwen Stefani",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Let Me Love You",
+                            "Artist": "Mario",
+                            "Genre": "R&B/Soul"
+                        },
+                        {
+                            "Title": "Since U Been Gone",
+                            "Artist": "Kelly Clarkson",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "One, Two Step",
+                            "Artist": "Ciara feat. Missy Elliott",
+                            "Genre": "R&B/Soul"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [3, 2, 5, 1, 4],
+                            "R&B/Soul": [5, 4, 2, 3, 1]
+                        }
+                    }
+                },
+                {
+                    "year": "2010",
+                    "songs": [
+                        {
+                            "Title": "TiK ToK",
+                            "Artist": "Ke$ha",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Need You Now",
+                            "Artist": "Lady Antebellum",
+                            "Genre": "Country"
+                        },
+                        {
+                            "Title": "Hey, Soul Sister",
+                            "Artist": "Train",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "California Gurls",
+                            "Artist": "Katy Perry feat. Snoop Dogg",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "OMG",
+                            "Artist": "Usher feat. will.i.am",
+                            "Genre": "R&B/Soul"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [3, 5, 2, 1, 4],
+                            "Country": [5, 1, 4, 3, 2],
+                            "R&B/Soul": [5, 4, 3, 2, 1]
+                        }
+                    }
+                },
+                {
+                    "year": "2015",
+                    "songs": [
+                        {
+                            "Title": "Uptown Funk",
+                            "Artist": "Mark Ronson feat. Bruno Mars",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "Thinking Out Loud",
+                            "Artist": "Ed Sheeran",
+                            "Genre": "Pop"
+                        },
+                        {
+                            "Title": "See You Again",
+                            "Artist": "Wiz Khalifa feat. Charlie Puth",
+                            "Genre": "Hip-Hop/Rap"
+                        },
+                        {
+                            "Title": "Trap Queen",
+                            "Artist": "Fetty Wap",
+                            "Genre": "Hip-Hop/Rap"
+                        },
+                        {
+                            "Title": "Sugar",
+                            "Artist": "Maroon 5",
+                            "Genre": "Pop"
+                        }
+                    ],
+                    "popularity": {
+                        "Genre": {
+                            "Pop": [3, 2, 5, 4, 1],
+                            "Hip-Hop/Rap": [5, 4, 2, 1, 3]
+                        }
+                    }
+                }
+            ]
+}

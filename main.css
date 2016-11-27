@@ -1,0 +1,253 @@
+body {
+    background-color: rgb(209, 209, 209);
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+
+h1 {
+    color: white;
+    background-color: #5c5c5c;
+}
+
+h1, img, text {
+    -webkit-user-select: none;
+    cursor: default;
+    pointer-events: none;
+}
+
+h4 {
+    color: #dddd00;    
+}
+
+h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+h6 {
+    margin-top: 7px;
+    line-height: 1.6em;
+}
+
+h5, h6, h7 {
+    color: white;
+}
+
+#cover {
+    position: relative;
+    width: 116px;
+    height: 116px;
+}
+
+#cover.hidden {
+    display: none;
+}
+
+#title {
+    color: #FFE600;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: 250;
+    line-height: 1em;
+}
+
+#artist {
+    color: #ffffff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 200;
+    line-height: 1em;
+}
+
+.speaker {
+    position: absolute;
+    pointer-events: none;
+}
+
+.speaker.hidden {
+    display: none;
+}
+
+.square {
+    cursor: default;
+}
+
+.block {
+    position: relative;
+    margin-top: 2px;
+}
+
+.container {
+    float: left;
+    padding-right: 8px;
+}
+
+.hidden {
+    display: none;
+}
+
+#centerDiv {
+    overflow: hidden;
+    width: 100%;
+}
+
+.legendText {
+    font-family: 'Lato', sans-serif;
+}
+
+button {
+    background-color: rgba(99, 99, 99, 1);
+    border: none;
+    color: white;
+    padding: 5px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border: 0px solid white;
+}
+
+.visButtons {
+    background-color: rgba(133, 133, 133, 1);
+}
+
+.popover.left .arrow:after {
+  border-left-color: #393939;
+}
+
+.popover.right .arrow:after {
+  border-right-color: #393939;
+}
+
+.popover {
+    pointer-events: none;
+    background-color: #393939;
+    max-width: 320px;
+}
+
+#songDet {
+    margin: 0px;
+    padding: 0px;
+}
+
+#songDet2 {
+    position: absolute;
+    left: 145px;
+    bottom: 6px;
+}
+
+hr {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 4px;
+}
+
+.musicDot {
+    cursor: pointer;
+}
+
+#tooltip {
+        position:absolute;
+        padding:10px;
+        color:#fff;
+        background:#333;
+        -webkit-box-shadow:3px 3px 5px #aaa;
+           -moz-box-shadow:3px 3px 5px #aaa;
+                box-shadow:3px 3px 5px #aaa;
+        width: auto;
+        height: auto;
+}
+
+#tooltip.hidden {
+        display: none;
+}
+
+#tooltip p {
+        margin: 0;
+        font-family: sans-serif;
+        font-size: 16px;
+        line-height: 20px;
+}
+
+.nav-tabs {
+    -webkit-user-select: none;
+}
+
+
+html, body {height: 100%;}
+
+#wrap {min-height: 100%;}
+
+#main {overflow:auto;
+	padding-bottom: 190px;}  /* must be same height as the footer */
+
+#footer {
+    -webkit-user-select: none;
+    
+    position: relative;
+	margin-top: -190px; /* negative value of footer height */
+	height: 190px;
+	clear: both;
+    padding: 15px 15px;
+    background-color: #dbdbdb;
+};
+
+/*Opera Fix*/
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;/
+}
+
+.songsLeft {
+    width: 55%;
+    float: left;
+    padding: 5px;
+}
+
+.songsRight {
+    width: 45%;
+    float: left;
+    padding: 5px;
+}
+
+
+.modal-dialog {
+    width: 800px; /* New width for default modal */
+}
+
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+.alignleft {
+    float: left;
+    width: 33.33333%;
+    text-align: left;
+}
+.aligncenter {
+    float: left;
+    width: 33.33333%;
+    text-align: left;
+}
+.alignright {
+    float: left;
+    width: 33.33333%;
+    text-align: left;
+}
+
+.modal-body a {
+    display: block;
+}

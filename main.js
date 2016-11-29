@@ -196,7 +196,7 @@ var rankNamespace = function () {
         function transCB(transition, callback) { 
             
             inTransition = true;
-            if (transition.size() == 0) { callback(); }
+            if (transition.size() == 0) { return callback(); }
             
             var n = 0; 
             transition 
@@ -512,7 +512,9 @@ var rankNamespace = function () {
 
                 var trans = d3.selectAll(".square")
                     .transition()
-                    .call(transCB)
+                    .call(transCB, function() {
+                        // 
+                    })
                      .delay(function(d, i) {
                         return i * 25;
                     })

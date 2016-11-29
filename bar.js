@@ -64,7 +64,7 @@ var layer = null;
 // Arrays
 
 // Contains the genres for each year (in a particular order)
-var genreArr = [];
+var genreArr = {};
 // Main stacked array
 var arr = [];
 

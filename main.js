@@ -1,12 +1,18 @@
+/*
+    Main visualization
+                        main.js
+*/
 
+// Namespace for audio onended callback
 var ns = {};
 
 var rankNamespace = function () {
 
         var currentTab = "#centerDiv";
-    
+        
         // http://stackoverflow.com/questions/20705905/bootstrap-3-jquery-event-for-active-tab-change
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            
             currentTab = $(e.target).attr("href") // activated tab
             
             // Hide the icons and stop audio player
@@ -17,7 +23,7 @@ var rankNamespace = function () {
                 d3.select("#audioIcon").classed("hidden", true);
             } else {
                 
-                reposition();
+                repositionStop();
             }
         });
         
@@ -29,8 +35,7 @@ var rankNamespace = function () {
         // References to playing and focused squares
         var playingSquare = null;
         var focusedSquare = null;
-        var invalidFocused = null;
-
+        
         // Speaker width and height
         var sWidth = null;
         var sHeight = null;
@@ -40,18 +45,39 @@ var rankNamespace = function () {
         
         // This object holds the number of songs per year per genre
         var numYearGenre = {};
-    
+        
+        // Colors
+        var colors = { gray: "rgb(199, 199, 199)", 
+                      lightgray: "#d9d9d9",
+                      lightgreen: "#7de800",
+                      blue: "#0089ff", 
+                      orange: "#ff6200", 
+                      green: "#00a300", 
+                      purple: "#CC00FA", 
+                      red: "#e80000" };
+        
+        // Used to track mouse position during transition
+        // This is used to fix a minor bug involving the popover not appearing
+        var mouseX = 0;
+        var mouseY = 0;
+        
         // SVG width and height
         var width = 960 - 200;
         var height = 450 - 100;
 
         // Margin
-        var margin = {top: 50, right: 200, bottom: 50, left: 50};
-
+        var margin = {top: 15, right: 200, bottom: 30, left: 50};
+        
         // Main SVG
         var svg = d3.select("#centerDiv").append("svg")
                     .attr("width", width + margin.right + margin.left)
                     .attr("height", height + margin.top + margin.bottom)
+                    .on("mousemove", function() {
+                        if (inTransition) {
+                            mouseX = d3.event.clientX;
+                            mouseY = d3.event.clientY;
+                        }
+                    })
                     .append("g")
                         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
         
@@ -85,7 +111,7 @@ var rankNamespace = function () {
 
         var colorScale = d3.scale.ordinal()
             .domain(genres)
-            .range(["#0089ff", "#ff6200", "#00a300", "#CC00FA", "#e80000"]);
+            .range([colors.blue, colors.orange, colors.green, colors.purple, colors.red]);
     
         // When a preview is finished, remove the stop icon and 
         // show the play icon instead
@@ -101,8 +127,22 @@ var rankNamespace = function () {
             playingSquare = null;
         }
         
-         
-        function showDummyIcon(ele, d) {
+        function showDummyIcon(ele) {
+            
+            var d = d3.select(ele)[0][0].__data__;
+            
+            // Make sure that the square is the correct genre
+            // And if not, don't focus it..
+            if (selectedGenre != "all") {
+                if (d3.select(ele)[0][0].__data__.Genre != selectedGenre) {
+                    focusedSquare = null;
+                    return null;
+                }
+            }
+            
+            // Show mouse pointer
+            d3.select(ele).style("display", "block")
+                                .style("cursor", "pointer");  
             
             // Show the tooltip if not already
             if(!$('.popover').hasClass('in')) {
@@ -156,44 +196,52 @@ var rankNamespace = function () {
         function transCB(transition, callback) { 
             
             inTransition = true;
-            if (transition.size() === 0) { callback(); }
+            if (transition.size() == 0) { callback(); }
             
             var n = 0; 
             transition 
                 .each(function() { ++n; }) 
                 .each("end", function() {
                     if (!--n) {
+                        
                         inTransition = false;
+                        
+                        ////
+                        
+                        var element = document.elementFromPoint(mouseX, mouseY);
+                        
+                        if (d3.select(element)[0][0].className.baseVal == "square") {
+                            
+                            focusedSquare = element;
+                            showDummyIcon(focusedSquare);
+                        }
+                        
+                        ////
+                        
                         callback.apply(this, arguments);
                     }
                 });
         }
     
-        // This function repositions the 'stop' button
-        function reposition() {
+        // This function reposition the 'stop' button
+        function repositionStop() {
             
-            if (currentTab != "#centerDiv") { return null; }
-            
-            ////
-
-            var ele = playingSquare;
-
-            if (ele == null) {
+            if (playingSquare == null) {
                  return null;
             }
             
             // Show audio icon for good measure
             d3.select("#audioIcon").classed("hidden", false);
-
-            var matrix = ele.getScreenCTM()
-                                .translate(+ ele.getAttribute("x"), + ele.getAttribute("y"));
-
-            var iWidth = ele.getAttribute("width");
-            var iHeight = ele.getAttribute("height");
-
+            
+            var matrix = playingSquare.getScreenCTM()
+                                .translate(+ playingSquare.getAttribute("x"), + playingSquare.getAttribute("y"));
+            
+            var iWidth = playingSquare.getAttribute("width");
+            var iHeight = playingSquare.getAttribute("height");
+            
             var xPos = window.pageXOffset + matrix.e + iWidth/2 - sWidth/2;
             var yPos = window.pageYOffset + matrix.f + iHeight/2 - sHeight/2;
-
+            
             d3.select("#audioIcon")
                     .style("opacity", 0.55)
                     .attr("width", sWidth + "px")
@@ -203,7 +251,7 @@ var rankNamespace = function () {
                     .style("top", yPos + "px");
             
             if (focusedSquare != null) {
-                showDummyIcon(focusedSquare, d3.select(focusedSquare)[0][0].__data__);
+                showDummyIcon(focusedSquare);
             }
         }
     
@@ -221,8 +269,6 @@ var rankNamespace = function () {
             
             if (slide) {
                 
-                var done = false;
-                
                 svg.selectAll(".square")
                     .style("cursor", function(d) {
                         if (d.Genre == selectedGenre) {
@@ -230,21 +276,14 @@ var rankNamespace = function () {
                         }
                         return "default";
                     }).style("fill", function(d) {
-                        if (d.Genre === selectedGenre) {
+                        if (d.Genre == selectedGenre) {
                             return colorScale(selectedGenre);
                         }
-                        return "#c7c7c7";
+                        return colors.gray;
                     }).interrupt().transition()
                     .call(transCB, function() {
                         
-                        if (!done) {
-                            reposition();
-                            
-                            if (focusedSquare != null) {
-                                showDummyIcon(focusedSquare, d3.select(focusedSquare)[0][0].__data__);
-                            }
-                            done = true;
-                        }
+                        repositionStop();
                     })
                     .attr("y", function(d, i) {
 
@@ -277,7 +316,7 @@ var rankNamespace = function () {
                             return "#c7c7c7";
                         });
                     
-                reposition();
+                repositionStop();
             }
         }
         
@@ -389,7 +428,7 @@ var rankNamespace = function () {
                                 html : true,
                                 content: function() {
 
-                                    return '<div id="pCon" class="media"><a href="#" class="pull-left"><img src="' + songDetail[d.Title].cover + '" width="120px" height="120px" class="media-object"></a><div class="media-body"><h4 class="display-1">' + d.Title + '</h4><h5>' + d.Artist + '</h5><hr></div><h6>Year: ' + d.Year + '<br>Genre: ' + d.Genre + '<br>Rank: ' + d.Rank + '</h6></div></div></div>';
+                                    return '<div id="pCon" class="media"><a href="#" class="pull-left"><img src="' + songDetail[d.Title].cover + '" width="120px" height="120px" class="media-object"></a><div class="media-body"><h4 class="display-1">' + d.Title + '</h4><h5>' + d.Artist + '</h5><hr></div><h6>Year: ' + d.Year + '<br/>Genre: ' + d.Genre + '<br/>Rank: ' + d.Rank + '</h6></div></div></div>';
                                 }
                             });
                         })
@@ -402,7 +441,7 @@ var rankNamespace = function () {
                             
                             // If grayed out, then focus this square  
                             // and show all other genres
-                            if (this.style.fill == "rgb(199, 199, 199)") {
+                            if (this.style.fill == colors.gray) {
                                 
                                 showAllGenres(this);
                                 return null;
@@ -427,7 +466,7 @@ var rankNamespace = function () {
                             } else {
 
                                 playingSquare = this;
-                                reposition();
+                                repositionStop();
 
                                 d3.select("#dummyIcon")
                                     .classed("hidden", true);
@@ -441,27 +480,31 @@ var rankNamespace = function () {
                             var ele = d3.select(this);
                             
                             // If grayed out, then return
-                            if (this.style.fill == "rgb(199, 199, 199)" || songDetail[d.Title] == null) {
+                            if (this.style.fill == colors.gray || songDetail[d.Title] == null) {
 
                                 ele.style("cursor", "default");
                                 $(this).popover('hide');
                                 
-                                invalidFocused = this;
                                 return null;
                             }
                             
-                            ele.style("cursor", "pointer");
+                            if (selectedGenre != "all") {
+                                if (d3.select(this)[0][0].__data__.Genre != selectedGenre) {
+                                    return null;
+                                }
+                            }
+                            
                             focusedSquare = this;
                             
                             if (!inTransition) {
-                                showDummyIcon(this, d);
+                                showDummyIcon(this);
                             }
                         })
                         .on("mouseout", function() {
 
                             focusedSquare = null;
-                    
-                            d3.select(this).style("cursor", "pointer");
+                            
+                            d3.select(this).style("cursor", "default");
                             d3.select("#dummyIcon").classed("hidden", true);
                             
                             $(this).popover('hide');
@@ -469,6 +512,7 @@ var rankNamespace = function () {
 
                 var trans = d3.selectAll(".square")
                     .transition()
+                    .call(transCB)
                      .delay(function(d, i) {
                         return i * 25;
                     })
@@ -498,7 +542,7 @@ var rankNamespace = function () {
 
                         if ( JSON.parse(xmlhttp.responseText).tracks.total == 0) {
                             if (d.Title == "Nothing Compares 2 U") {
-                                songDetail[d.Title] = { preview: "nothingc2u.mp3", cover: "nothingc2u.jpg" };
+                                songDetail[d.Title] = { preview: "https://upload.wikimedia.org/wikipedia/en/2/22/Nothing_Compares_2_U_sample.ogg", cover: "https://upload.wikimedia.org/wikipedia/en/e/e6/Nothingcompares2u.jpg" };
                             } else { // Otherwise we don't have this song's information..
                                songDetail[d.Title] = { preview: "", cover: "" }; 
                             }
@@ -525,7 +569,7 @@ var rankNamespace = function () {
             });
         });
 
-        // On window resize, reposition the tooltip and the stop icon 
+        // On window resize, repositionStop the tooltip and the stop icon 
         window.addEventListener('resize', function() {
             
             if ($(focusedSquare) != null) {
@@ -533,7 +577,7 @@ var rankNamespace = function () {
                 $(focusedSquare).popover('show');
             }
             
-            reposition();
+            repositionStop();
         });
         
     
@@ -555,13 +599,9 @@ var rankNamespace = function () {
         function getCorrNum(element) {
             
             var data = d3.select(element)[0][0].__data__;
-
-            var yr = data.Year;
             var rank = data.Rank;
-
-            // This code simply gets the # of songs position 
-            // and translates it to get the sought after rank position
-            var arr = domainData[yr][selectedGenre];
+            
+            var arr = domainData[data.Year][selectedGenre];
             var soughtNum = arr[rank-1];
             
             return { num: soughtNum, equal: (soughtNum == (5-rank+1)) };
@@ -576,12 +616,11 @@ var rankNamespace = function () {
         var pY = height - lH - 30 - 5;
         
         var pButton = svg.append("rect")
-                        .attr("class", "popButton")
                         .attr("x", pX)
                         .attr("y", pY - 35)
                         .attr("width", lW)
                         .attr("height", 30)
-                        .attr("fill", "#e6e6e6")
+                        .attr("fill", colors.lightgray)
                         .style("stroke", "black")
                         .style("stroke-size", "2px")
                             .on("mouseover", function() {
@@ -594,10 +633,6 @@ var rankNamespace = function () {
                             })
                             .on("click", function() {
                                 
-                                
-                                // Hide the stop icon
-                                // d3.select("#audioIcon").classed("hidden", true);
-                                
                                 // Set focused square to null
                                 focusedSquare = null;
                                 
@@ -607,7 +642,7 @@ var rankNamespace = function () {
                                 if (togglePopularity) {
                                     
                                     // Color the button green
-                                    pButton.style("fill", "#70d000");
+                                    pButton.style("fill", colors.lightgreen);
                                     
                                     if (playingSquare != null) {
                                         var result = getCorrNum(playingSquare);
@@ -621,8 +656,8 @@ var rankNamespace = function () {
                                     showPopularity(true);
                                 } else {
                                     
-                                    // Color the button grey
-                                    pButton.style("fill", "#e6e6e6");
+                                    // Color the button gray
+                                    pButton.style("fill", colors.lightgray);
                                     
                                     if (playingSquare != null) {
                                         var equal = getCorrRank(playingSquare).equal;
@@ -639,28 +674,17 @@ var rankNamespace = function () {
                                     
                                     d3.select("#dummyIcon").classed("hidden", true);
                                     
-                                    var done = false;
-                                    
                                     var trans = svg.selectAll(".square")
                                         .interrupt().transition()
                                         .call(transCB, function() {
-                                                
-                                            if (!done) {
-                                                
-                                                reposition();
 
-                                                /*if (focusedSquare != null) {
-                                                    showDummyIcon(focusedSquare, d3.select(focusedSquare)[0][0].__data__);
-                                                }*/
-
-                                                done = false;
-                                            }
+                                            repositionStop();
                                         })
                                         .style("fill", function(d) {
-                                            if (d.Genre === selectedGenre) {
+                                            if (d.Genre == selectedGenre) {
                                                 return colorScale(selectedGenre);
                                             }
-                                            return "#c7c7c7";
+                                            return colors.gray;
                                         })
                                         .attr("y", function(d) {
                                             
@@ -740,20 +764,18 @@ var rankNamespace = function () {
             pButton.classed("hidden", true);
             pText.classed("hidden", true);
             
-            // Reposition and recolor squares
+            // Reposition stop icon and re-color squares
             svg.selectAll(".square")
                 .interrupt().transition()
                 .call(transCB, function() {
                     
-                    reposition();
+                    repositionStop();
                     
                     if (focusedSquare != null) {
                         // Show tooltip
                         $(focusedSquare).popover('show');
-                        // Show cursor hand
-                        d3.select(focusedSquare).style("cursor", "pointer");
                         // Show dummy play icon
-                        showDummyIcon(focusedSquare, d3.select(focusedSquare)[0][0].__data__);
+                        showDummyIcon(focusedSquare);
                     }
                 })
                 .attr("y", function(d, i) {
@@ -770,7 +792,7 @@ var rankNamespace = function () {
                         .attr("y", lY - 35)
                         .attr("width", lW)
                         .attr("height", 30)
-                        .attr("fill", "#e6e6e6")
+                        .attr("fill", colors.lightgray)
                         .style("stroke", "black")
                         .style("stroke-size", "2px")
                             .on("mouseover", function() {
@@ -838,7 +860,7 @@ var rankNamespace = function () {
             
             focusedSquare = null;
             
-            if (selectedGenre === genre) {
+            if (selectedGenre == genre) {
                 
                 showAllGenres();
             } else {
@@ -872,11 +894,11 @@ var rankNamespace = function () {
 
                             if (focusedSquare != null) {
 
-                                showDummyIcon(focusedSquare, d3.select(focusedSquare)[0][0].__data__);
+                                showDummyIcon(focusedSquare);
                             }
                         })
                         .style("fill", function(d) {
-                            if (d.Genre === genre) {
+                            if (d.Genre == genre) {
                                 return colorScale(genre);
                             }
                             return "#c7c7c7";

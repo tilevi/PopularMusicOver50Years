@@ -1,10 +1,16 @@
 
+/*
+    Bar graph
+                bar.js
+*/
+
+
 // SVG width and height
 var width = 900;
 var height = 500 - 100;
 
 // Margin
-var margin = {top: 50, right: 200, bottom: 50, left: 50};
+var margin = { top: 15, right: 200, bottom: 30, left: 50 };
 
 // Time formatting
 var timeFormat = d3.time.format("%Y");
@@ -24,6 +30,8 @@ var currElement = null;
 // Selected genre (defaults to all)
 var selectedGenre = "all";
 
+// Indicates if the rectangles are grouped
+var grouped = false;
 
 // Main SVG
 var svg = d3.select("#centerDiv2").append("svg")
@@ -32,6 +40,7 @@ var svg = d3.select("#centerDiv2").append("svg")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// Scales
 var ord = d3.scale.ordinal();
 
 var x = d3.scale.ordinal()
@@ -45,18 +54,23 @@ var colorScale = d3.scale.ordinal()
         .range(["#0089ff", "#ff6200", "#00a300", "#a100c7", "rgb(206, 0, 0)"]);
 
 
+// We store these variables outside the d3.json method
+// Since other functions will need to access these vars
 var yAxisG = null;
 var yAxis = null;
-
-var yearArr = [];
-var arr = [];
-
 var layer = null;
 
+
+// Arrays
+
+// Contains the genres for each year (in a particular order)
+var genreArr = [];
+// Main stacked array
+var arr = [];
+
+
+// Read in the JSON file
 d3.json("popular_music.json", function(data) {
-    
-    // This array contains the genres for each year
-    yearArr = [];
     
     // Contains the number of songs per genre for each year
     var numYearGenre = {};
@@ -64,51 +78,60 @@ d3.json("popular_music.json", function(data) {
     data.years.forEach(function(obj) {
         
         var year = obj.year;
+        
+        // Number of songs for each genre
         numYearGenre[year] = { "Pop": 0, "Hip-Hop/Rap": 0, "R&B/Soul": 0, "Country": 0, "Rock": 0 };
         
+        // For each song in the given year
         for (var j = 0; j < obj.songs.length; j++) {
             
+            // Select the song object
             var song = obj.songs[j];
             numYearGenre[year][song.Genre] = numYearGenre[year][song.Genre] + 1;
         }
         
         // Sort by ascending order of number of songs
-        var sortable = [];
+        var sort = [];
         
         Object.keys(obj.popularity.Genre).forEach(function(genre) {
-            sortable.push( { genre: genre, num: numYearGenre[year][genre] } );
+            sort.push( { genre: genre, num: numYearGenre[year][genre] } );
         });
-        sortable.sort(function(a, b) {
+        
+        // Sort in ascending order (by number of songs)
+        sort.sort(function(a, b) {
             return (a.num - b.num);
         });
         
-        var parseTime = timeFormat.parse(year);
-        yearArr[parseTime] = [];
         
-        sortable.forEach(function(ob) {
-            yearArr[parseTime].push(ob.genre); 
+        // Next, we need to push these genres into the year
+        genreArr[year] = [];
+        
+        // Here, we push the genres into the array in a particular order
+        // And this order is sorted by the number songs (above)
+        sort.forEach(function(o) {
+            genreArr[year].push(o.genre); 
         });
     });
     
-    // Contains our main data
-    arr = genres.map(function(genre) {
+    // 'arr' contains our main data
+    arr =   genres.map(function(genre) {
                 return data.years.map(function(d) {
-                    return { genre: genre, year: d.year, x: timeFormat.parse(d.year), y: numYearGenre[d.year][genre] };
+                    return { x: timeFormat.parse(d.year), y: numYearGenre[d.year][genre], genre: genre, year: d.year };
                 });
-        });
-
+            });
+    
     // Stack the data
     arr = stack(arr);
     
     // Get the maximum y for our data
     var yStackMax = d3.max(arr, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
-
-    // Compute the x domain (years)
+    
+    // Compute the x domain (based on years)
     x.domain(data.years.map(function(d) { return timeFormat.parse(d.year); }));
     
-    // Compute y domain (based on the maximum y)
+    // Compute y domain (based on the maximum y-value)
     y.domain([0, yStackMax]);
-
+    
     
     // Axes
     var xAxis = d3.svg.axis()
@@ -161,20 +184,15 @@ d3.json("popular_music.json", function(data) {
                 .attr("width", x.rangeBand())
                 .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
                 .style("fill", function(d, i) { return colorScale(d.genre); })
-                .each(function(d, i){
-        
+                .each(function(d, i) {
                     $(this).popover({
-
                         container: 'body',
                         placement: +d.year < 2005 ? "right" : "left",
-
                         delay: { "show": 250, "hide": 250 },
-
                         trigger: 'manual',
-
                         html: true,
                         content: function() {
-                            return '<div class="media"><h7 class="display-1">Year: ' + d.year + '</h7><br><h7 class="display-1">Genre: ' + d.genre + '</h7><br><h7 class="display-1">Number of songs: ' + d.y + '</h7></div>';
+                            return '<div class="media"><h7 class="display-1">Year: ' + d.year + '</h7><br/><h7 class="display-1">Genre: ' + d.genre + '</h7><br/><h7 class="display-1">Number of songs: ' + d.y + '</h7></div>';
                         }
                     });
                 })
@@ -204,11 +222,8 @@ d3.json("popular_music.json", function(data) {
                 });
 });
 
-var grouped = false;
-
-
+// Stacks the rectangles
 var toStacked = function() {
-    
     
     groupText.text("Group Genres");
     
@@ -218,18 +233,17 @@ var toStacked = function() {
     yAxisG.call(yAxis);
     
     layer.selectAll("rect")
-                    .transition()
-                    .duration(500)
-                    .delay(function(d, i) { return i * 10; })
-                        .attr("y", function(d) { return y(d.y0 + d.y); })
-                        .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-                    .transition()
-                        .attr("x", function(d) { return x(d.x); })
-                        .attr("width", x.rangeBand());
-    
+        .transition()
+        .duration(500)
+        .delay(function(d, i) { return i * 10; })
+            .attr("y", function(d) { return y(d.y0 + d.y); })
+            .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+            .transition()
+            .attr("x", function(d) { return x(d.x); })
+            .attr("width", x.rangeBand());
 }
 
-
+// Groups the rectangles
 var toGrouped = function() {
     
     // Change button text
@@ -249,7 +263,7 @@ var toGrouped = function() {
         .delay(function(d, i) { return i * 10; })
         .attr("x", function(d) {
         
-            ord.domain(yearArr[d.x]);
+            ord.domain(genreArr[d.year]);
             
             if (ord(d.genre) == null) {
                 return x(d.x);
@@ -259,7 +273,7 @@ var toGrouped = function() {
         })
       .attr("width", function(d) {
 
-            ord.domain(yearArr[d.x]);
+            ord.domain(genreArr[d.year]);
 
             if (ord(d.genre) == null) {
                 return 0;
@@ -274,12 +288,12 @@ var toGrouped = function() {
 
 
 // Draw legend
+
 var lW = 145;
 var lH = 180;
 
 var lX = width + 25;
 var lY = height - lH;
-
 
 var button = svg.append("rect")
                 .attr("class", "showButton")
@@ -310,17 +324,16 @@ var button = svg.append("rect")
                     });
 
 var groupText = svg.append("text")
-    .attr("class", "legendText")
-    .attr("x", lX + lW/2)
-    .attr("y", lY - 25 + 15)
-    .attr("dy", "-0.3em")
-    .attr("text-anchor", "middle")
-    .style("font-weight","bold")
-    .style("font-size","16px")
-    .text("Group Genres");
+                    .attr("class", "legendText")
+                    .attr("x", lX + lW/2)
+                    .attr("y", lY - 25 + 15)
+                    .attr("dy", "-0.3em")
+                    .attr("text-anchor", "middle")
+                    .style("font-weight","bold")
+                    .style("font-size","16px")
+                    .text("Group Genres");
 
-
-
+// Legend rectangle
 var rect = svg.append("rect")
                 .attr("x", lX)
                 .attr("y", lY)
@@ -330,78 +343,34 @@ var rect = svg.append("rect")
                 .style("stroke", "black")
                 .style("stroke-size", "2px");
 
+// Legend scale
 var legendScale = d3.scale.ordinal()
                     .domain(genres)
                     .rangeBands([0, lH], 0.2);    
 
+// Legend group
 var legendG = svg.selectAll(".legendRect")
-                .data(genres)
-                .enter()
-                .append("g");
+                    .data(genres)
+                    .enter()
+                    .append("g");
 
+// Small genre rectangles
 var legendRect = legendG.append("rect")
-    .attr("class", "legendRect")
-    .attr("x", lX + 5)
-    .attr("y", function(d) { return lY + legendScale(d); })
-    .attr("width", legendScale.rangeBand())
-    .attr("height", legendScale.rangeBand())
-    .style("fill", function(d) { return colorScale(d); })
-    .style("stroke", "black")
-    .style("stroke-width", "1px");
+                            .attr("class", "legendRect")
+                            .attr("x", lX + 5)
+                            .attr("y", function(d) { return lY + legendScale(d); })
+                            .attr("width", legendScale.rangeBand())
+                            .attr("height", legendScale.rangeBand())
+                            .style("fill", function(d) { return colorScale(d); })
+                            .style("stroke", "black")
+                            .style("stroke-width", "1px");
 
-/*legendRect.on("mouseover", function() {
-    d3.select(this).style("display", "block")
-        .style("cursor", "pointer");    
-});
-
-legendRect.on("mouseout", function() {
-    d3.select(this).style("display", "block")
-        .style("cursor", "default");    
-});*/
-
-legendRect.on("click", function(genre) {
-    
-    if (selectedGenre != genre) {
-        
-        selectedGenre = genre;
-        
-        /*layer.selectAll("rect")
-            .transition()
-            .duration(500)
-            .style("opacity", function(d, i) {
-                if (d.genre != genre) {
-                    return 0.4;
-                }
-                return 1;
-            })
-            .attr("stroke-width", function(d) {
-                if (d.genre == genre) {
-                    return 2;
-                }
-                return 0;
-            })
-            .attr("stroke", "black");*/
-    } else {
-        
-        selectedGenre = "all";
-        
-        /*layer.selectAll("rect")
-            .transition()
-            .duration(500)
-            .style("opacity", function(d, i) {
-                return 1;
-            })
-            .attr("stroke-width", function(d) {
-                return 0;
-            });*/
-    }
-});
-
+// Genre text for each rectangle (on the right-hand side)
 legendG.append("text")
-    .attr("class", "legendText")
-    .attr("x", lX + 38)
-    .attr("y", function(d) { return lY + legendScale(d); })
-    .attr("dy", "1.4em")
-    .style("font-weight", "bold")
-    .style("font-size", "14px")
-    .text(function(d) { return d; });
+            .attr("class", "legendText")
+            .attr("x", lX + 38)
+            .attr("y", function(d) { return lY + legendScale(d); })
+            .attr("dy", "1.4em")
+            .style("font-weight", "bold")
+            .style("font-size", "14px")
+            .text(function(d) { return d; });

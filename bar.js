@@ -5,9 +5,9 @@
 */
 
 
-// SVG width and height
-var width = 900;
-var height = 500 - 100;
+var width = 960 - 200;
+var height = 450 - 100;
+
 
 // Margin
 var margin = { top: 15, right: 200, bottom: 30, left: 50 };
@@ -55,16 +55,15 @@ var colorScale = d3.scale.ordinal()
 
 
 // We store these variables outside the d3.json method
-// Since other functions will need to access these vars
+// since other functions will need to access them
 var yAxisG = null;
 var yAxis = null;
 var layer = null;
 
 
-// Arrays
-
 // Contains the genres for each year (in a particular order)
 var genreArr = {};
+
 // Main stacked array
 var arr = [];
 

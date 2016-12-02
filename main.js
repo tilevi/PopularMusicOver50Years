@@ -336,6 +336,7 @@ var rankNamespace = function () {
                         return yScale(mapArr[d.Rank - 1]);
                     })
                     .interrupt().transition()
+                        .call(transCB, function() {})
                         .style("fill", function(d, i) {
                             if (d.Genre == selectedGenre) {
                                 return colorScale(selectedGenre);
@@ -452,16 +453,15 @@ var rankNamespace = function () {
                         
                         // Do not respond if in transition
                         if (inTransition) {
+                            
+                            console.log("in transition");
+                            
                             return null;
                         }
-                        
-                        console.log( this.style.fill, colors.gray );
                         
                         // If grayed out, then focus this square  
                         // and show all other genres
                         if (this.style.fill == colors.gray) {
-                            
-                            console.log("gray");
                             
                             // 'this' is the reference to this square
                             // And should be focused if applicable
@@ -599,9 +599,12 @@ var rankNamespace = function () {
                         
                         // Another song processed
                         cacheTotal = cacheTotal + 1;
+                        document.title = Math.floor( (cacheTotal/55) * 100 ) + "%";
                         
                         // If we have reached our total, then color the squares.
                         if (cacheTotal >= 55) {
+                            
+                            document.title = "Popular Music and Genres over Half a Century";
                             
                             d3.selectAll(".square")
                                 .transition()
@@ -928,6 +931,7 @@ var rankNamespace = function () {
 
         legendRect.on("click", function(genre) {
             
+            // We are not focusing any square right now
             focusedSquare = null;
             
             if (selectedGenre == genre) {

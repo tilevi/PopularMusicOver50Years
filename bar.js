@@ -247,8 +247,8 @@ var toStacked = function() {
             .attr("y", function(d) { return y(d.y0 + d.y); })
             .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
             .transition()
-            .attr("x", function(d) { return x(d.x); })
-            .attr("width", x.rangeBand());
+                .attr("x", function(d) { return x(d.x); })
+                .attr("width", x.rangeBand());
 }
 
 // Group the rectangles

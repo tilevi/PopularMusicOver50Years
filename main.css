@@ -2,10 +2,15 @@ body {
     background-color: rgb(241, 241, 241);
 }
 
+.noSelect, h1, img, text {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
 /* Storyline */
 #storyline {
-    -webkit-user-select: none;
     padding: 15px 5px;
     width: 900px;
     color: #000000;
@@ -48,7 +53,6 @@ h6 {
 }
 
 h1, img, text {
-    -webkit-user-select: none;
     cursor: default;
     pointer-events: none;
 }
@@ -196,7 +200,6 @@ hr {
 }
 
 footer {
-    -webkit-user-select: none;
     background-color: #e2e2e2;
 }
 

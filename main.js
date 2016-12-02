@@ -64,9 +64,9 @@ var rankNamespace = function () {
         var mapData = {};
         
         // Colors
-        var colors = { gray: "rgb(199, 199, 199)", 
-                      lightgray: "#d9d9d9",
-                      lightgreen: "#7de800",
+        var colors = { gray: "rgb(222, 222, 222)", 
+                      lightgray: "rgb(230, 230, 230)", 
+                      lightgreen: "#7de800", 
                       blue: "#0089ff", 
                       orange: "#ff6200", 
                       green: "#00a300", 
@@ -449,15 +449,19 @@ var rankNamespace = function () {
                         });
                     })
                     .on("click", function(d) {
-
+                        
                         // Do not respond if in transition
                         if (inTransition) {
                             return null;
                         }
-
+                        
+                        console.log( this.style.fill, colors.gray );
+                        
                         // If grayed out, then focus this square  
                         // and show all other genres
                         if (this.style.fill == colors.gray) {
+                            
+                            console.log("gray");
                             
                             // 'this' is the reference to this square
                             // And should be focused if applicable
@@ -710,7 +714,7 @@ var rankNamespace = function () {
                                 } else {
                                     
                                     // Color the button gray
-                                    pButton.style("fill", colors.lightgray);
+                                    pButton.style("fill", colors.gray);
                                     
                                     if (playingSquare != null) {
                                         var equal = getCorrRank(playingSquare).equal;
@@ -888,7 +892,7 @@ var rankNamespace = function () {
             .attr("y", lY)
             .attr("width", lW)
             .attr("height", lH)
-            .attr("fill", "#bcbcbc")
+            .attr("fill", colors.lightgray)
             .style("stroke", "black")
             .style("stroke-size", "2px");
 

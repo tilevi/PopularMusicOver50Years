@@ -5,8 +5,8 @@
 */
 
 
-var width = 960 - 200;
-var height = 450 - 100;
+var width = 760;
+var height = 350;
 
 
 // Margin
@@ -20,6 +20,16 @@ var years = [ "1965", "1970", "1975", "1980", "1985", "1990", "1995", "2000", "2
 
 // Genres
 var genres = [ "Pop", "Hip-Hop/Rap", "R&B/Soul", "Rock", "Country" ];
+        
+// Colors
+var colors = { gray: "rgb(222, 222, 222)", 
+              lightgray: "rgb(230, 230, 230)", 
+              lightgreen: "#7de800", 
+              blue: "#0089ff", 
+              orange: "#ff6200", 
+              green: "#00a300", 
+              purple: "#CC00FA", 
+              red: "#e80000" };
 
 // Stack layout
 var stack = d3.layout.stack();
@@ -62,7 +72,7 @@ var layer = null;
 
 
 // Contains the genres for each year (in a particular order)
-var genreArr = {};
+var genreObj = {};
 
 // Main stacked array
 var arr = [];
@@ -103,12 +113,12 @@ d3.json("popular_music.json", function(data) {
         
         
         // Next, we need to push these genres into the year
-        genreArr[year] = [];
+        genreObj[year] = [];
         
         // Here, we push the genres into the array in a particular order
         // And this order is sorted by the number songs (above)
         sort.forEach(function(o) {
-            genreArr[year].push(o.genre); 
+            genreObj[year].push(o.genre); 
         });
     });
     
@@ -172,7 +182,7 @@ d3.json("popular_music.json", function(data) {
             .enter().append("g")
             .attr("class", "layer");
     
-    // Create rectangles
+    // Create the rectangles
     layer.selectAll("rect")
             .data(function(d) { return d; })
             .enter().append("rect")
@@ -205,8 +215,7 @@ d3.json("popular_music.json", function(data) {
                     $(this).on('shown.bs.popover', function() {
 
                         if(!$('.popover').hasClass('in') && currElement == this) {
-
-                            // $('.popover').css('background-color', col);
+                            
                             $(this).popover('show');
                         }
                     });
@@ -221,7 +230,7 @@ d3.json("popular_music.json", function(data) {
                 });
 });
 
-// Stacks the rectangles
+// Stack the rectangles
 var toStacked = function() {
     
     groupText.text("Group Genres");
@@ -242,7 +251,7 @@ var toStacked = function() {
             .attr("width", x.rangeBand());
 }
 
-// Groups the rectangles
+// Group the rectangles
 var toGrouped = function() {
     
     // Change button text
@@ -260,29 +269,31 @@ var toGrouped = function() {
         .transition()
         .duration(500)
         .delay(function(d, i) { return i * 10; })
-        .attr("x", function(d) {
+            .attr("x", function(d) {
+                
+                // Set the domain to the genres for that year
+                ord.domain(genreObj[d.year]);
+
+                if (ord(d.genre) == null) {
+                    return x(d.x);
+                }
+                
+                // Gets the correct position for the genre
+                return x(d.x) + ord(d.genre);
+            })
+          .attr("width", function(d) {
         
-            ord.domain(genreArr[d.year]);
-            
-            if (ord(d.genre) == null) {
-                return x(d.x);
-            }
-            
-            return x(d.x) + ord(d.genre);
+                ord.domain(genreObj[d.year]);
+
+                if (ord(d.genre) == null) {
+                    return 0;
+                }
+
+                return ord.rangeBand();
         })
-      .attr("width", function(d) {
-
-            ord.domain(genreArr[d.year]);
-
-            if (ord(d.genre) == null) {
-                return 0;
-            }
-            
-            return ord.rangeBand();
-    })
-    .transition()
-        .attr("y", function(d) { return y(d.y); })
-        .attr("height", function(d) { return height - y(d.y); });
+        .transition()
+            .attr("y", function(d) { return y(d.y); })
+            .attr("height", function(d) { return height - y(d.y); });
 }
 
 
@@ -300,7 +311,7 @@ var button = svg.append("rect")
                 .attr("y", lY - 35)
                 .attr("width", lW)
                 .attr("height", 30)
-                .attr("fill", "#e6e6e6")
+                .attr("fill", colors.lightgray)
                 .style("stroke", "black")
                 .style("stroke-size", "1px")
                     .on("mouseover", function() {
@@ -338,7 +349,7 @@ var rect = svg.append("rect")
                 .attr("y", lY)
                 .attr("width", lW)
                 .attr("height", lH)
-                .attr("fill", "#bcbcbc")
+                .attr("fill", colors.lightgray)
                 .style("stroke", "black")
                 .style("stroke-size", "2px");
 

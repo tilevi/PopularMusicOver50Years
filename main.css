@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(209, 209, 209);
+    background-color: rgb(241, 241, 241);
 }
 
 
@@ -182,7 +182,11 @@ hr {
 /* Footer */
 
 .Site {
-  display: flex;
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;  
   min-height: 100vh;
   flex-direction: column;
 }
@@ -193,7 +197,7 @@ hr {
 
 footer {
     -webkit-user-select: none;
-    background-color: #dbdbdb;
+    background-color: #e2e2e2;
 }
 
 /* Footer columns */

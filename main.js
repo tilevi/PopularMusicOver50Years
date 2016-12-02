@@ -931,6 +931,12 @@ var rankNamespace = function () {
 
         legendRect.on("click", function(genre) {
             
+            // Do not allow clicks during transitions
+            // This avoids lots of potential bugs
+            if (inTransition) {
+                return null;
+            }
+            
             // We are not focusing any square right now
             focusedSquare = null;
             
@@ -964,22 +970,22 @@ var rankNamespace = function () {
                     
                     // Otherwise, let's just fill the squares
                     svg.selectAll(".square")
-                        .interrupt().transition()
-                            .call(transCB, function() {
+                        .transition()
+                        .call(transCB, function() {
 
-                                d3.select("#dummyIcon").classed("hidden", true);
+                            d3.select("#dummyIcon").classed("hidden", true);
 
-                                if (focusedSquare != null) {
+                            if (focusedSquare != null) {
 
-                                    showSquareDetails(focusedSquare);
-                                }
-                            })
-                            .style("fill", function(d) {
-                                if (d.Genre == genre) {
-                                    return colorScale(genre);
-                                }
-                                return colors.gray;
-                            });
+                                showSquareDetails(focusedSquare);
+                            }
+                        })
+                        .style("fill", function(d) {
+                            if (d.Genre == genre) {
+                                return colorScale(genre);
+                            }
+                            return colors.gray;
+                        });
                 }
             }
         });

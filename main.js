@@ -454,8 +454,6 @@ var rankNamespace = function () {
                         // Do not respond if in transition
                         if (inTransition) {
                             
-                            console.log("in transition");
-                            
                             return null;
                         }
                         

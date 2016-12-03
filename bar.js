@@ -59,9 +59,11 @@ var x = d3.scale.ordinal()
 var y = d3.scale.linear()
             .range([height, 0]);
 
+
+// Color scale
 var colorScale = d3.scale.ordinal()
-        .domain(genres)
-        .range(["#0089ff", "#ff6200", "#00a300", "#a100c7", "rgb(206, 0, 0)"]);
+                        .domain(genres)
+                        .range([colors.blue, colors.orange, colors.green, colors.purple, colors.red]);
 
 
 // We store these variables outside the d3.json method

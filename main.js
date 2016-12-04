@@ -444,7 +444,52 @@ var rankNamespace = function () {
                         // Popover (tooltip)
                         $(this).popover({
                             container: 'body',
-                            placement : function (tooltip, element) {
+                            placement : function (tooltip, ele) {
+                                
+                                // This code fixes the popover position when scrolling
+                                // I tried many approaches, but finally landed on this
+                                setTimeout(function() {
+                                
+                                    // This is a small fix to when the user is scrolling
+                                    // Though, the visualization is meant to be viewed without scrolling
+                                    var scrollTop = $("body").scrollTop();
+                                    var scrollLeft = $("body").scrollLeft();
+
+                                    if (scrollTop != 0 || scrollLeft != 0) {
+
+                                        scrollTop = $("body").scrollTop();
+                                        scrollLeft = $("body").scrollLeft();
+
+                                        if (!(scrollTop == 0 && scrollLeft == 0) && focusedSquare == ele) {
+
+                                            // Position the play icon accordingly
+                                            var matrix = ele.getScreenCTM()
+                                                            .translate(+ ele.getAttribute("x"), + ele.getAttribute("y"));
+
+                                            var iWidth = +ele.getAttribute("width");
+                                            var iHeight = +ele.getAttribute("height");
+
+                                            var popover = $(".popover");
+
+                                            var xPos = window.pageXOffset + matrix.e;
+                                            var yPos = window.pageYOffset + matrix.f + iHeight/2 - popover.outerHeight()/2;
+
+                                            var year = d3.select(ele)[0][0].__data__.Year;
+
+                                            if (year < 1995) {
+                                                xPos = xPos + Math.floor(iWidth);
+                                            } else {
+                                                xPos = xPos - popover.outerWidth();
+                                            }
+
+                                            popover.css({ top: yPos + "px", left: xPos + "px" });
+
+                                            $('.popover.left .arrow').css('top', popover.outerHeight()/2);
+                                            $('.popover.right .arrow').css('top', popover.outerHeight()/2);
+                                        }
+                                    }
+                                }, 0);
+                                
                                 return +d.Year < 1995 ? "right" : "left";
                             },
                             delay: { "show": 100, "hide": 100 },
@@ -628,7 +673,7 @@ var rankNamespace = function () {
                 xmlhttp.send(null);
             });
         });
-
+        
         // On window resize, reposition the stop icon and popover
         window.addEventListener('resize', function() {
             

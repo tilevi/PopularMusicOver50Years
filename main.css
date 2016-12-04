@@ -1,6 +1,6 @@
 body {
     background-color: rgb(241, 241, 241);
-    position: fixed;
+    position: relative;
 }
 
 .noSelect, h1, img, text {

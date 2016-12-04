@@ -198,7 +198,38 @@ d3.json("popular_music.json", function(data) {
                 .each(function(d, i) {
                     $(this).popover({
                         container: 'body',
-                        placement: +d.year < 2005 ? "right" : "left",
+                        placement: function (tooltip, ele) {
+                            
+                            // Scroll left fix
+                            setTimeout(function() {
+                                
+                                var scrollLeft = $("body").scrollLeft();
+                                
+                                if (scrollLeft != 0) {
+                                    
+                                    scrollLeft = $("body").scrollLeft();
+                                    
+                                    if (scrollLeft != 0 && currElement == ele) {
+                                        
+                                        // Position the play icon accordingly
+                                        var matrix = ele.getScreenCTM()
+                                                        .translate(+ ele.getAttribute("x"), + ele.getAttribute("y"));
+
+                                        var iWidth = +ele.getAttribute("width");
+                                        var xPos = window.pageXOffset + matrix.e;
+                                        
+                                        if (+d.year < 2005) {
+                                            xPos += iWidth;
+                                        } else {
+                                            xPos -= $(".popover").outerWidth();
+                                        }
+                                        
+                                        $(".popover").css({ left: xPos + "px" });
+                                    }
+                                }
+                            }, 0);
+                            return +d.year < 2005 ? "right" : "left";
+                        },
                         delay: { "show": 250, "hide": 250 },
                         trigger: 'manual',
                         html: true,
@@ -226,7 +257,11 @@ d3.json("popular_music.json", function(data) {
                     $(this).popover('hide');
                 })
                 .on("mousemove", function(d) {
-                    $('.popover').css('top', (d3.event.clientY - 40) + 'px');
+                    
+                    $('.popover').css({ top: d3.event.clientY - 40 + $("body").scrollTop() + 'px' });
+                    
+                    $('.popover.left .arrow').css('top', 40);
+                    $('.popover.right .arrow').css('top', 40);
                 });
 });
 

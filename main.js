@@ -615,8 +615,6 @@ var rankNamespace = function () {
                         $(this).popover('hide');
                     });
             
-            document.title = "0%";
-            
             // URL Processing
             
             var cacheTotal = 0;

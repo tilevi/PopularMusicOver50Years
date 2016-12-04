@@ -615,10 +615,12 @@ var rankNamespace = function () {
                         $(this).popover('hide');
                     });
             
+            document.title = "0%";
+            
             // URL Processing
-
+            
             var cacheTotal = 0;
-
+            
             // For each song, collect the proper URLs
             songArr.forEach(function(d) {
                 

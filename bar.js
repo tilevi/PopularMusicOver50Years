@@ -214,12 +214,11 @@ d3.json("popular_music.json", function(data) {
                                         // Position the play icon accordingly
                                         var matrix = ele.getScreenCTM()
                                                         .translate(+ ele.getAttribute("x"), + ele.getAttribute("y"));
-
-                                        var iWidth = +ele.getAttribute("width");
+                                        
                                         var xPos = window.pageXOffset + matrix.e;
                                         
                                         if (+d.year < 2005) {
-                                            xPos += iWidth;
+                                            xPos += +ele.getAttribute("width");;
                                         } else {
                                             xPos -= $(".popover").outerWidth();
                                         }

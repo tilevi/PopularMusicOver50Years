@@ -210,8 +210,6 @@ d3.json("popular_music.json", function(data) {
                 .on("mouseover", function(d) {
 
                     currElement = this;
-
-                    $('.popover').css('top', (d3.event.clientY - 40) + 'px');
                     $(this).popover('show');
 
                     $(this).on('shown.bs.popover', function() {

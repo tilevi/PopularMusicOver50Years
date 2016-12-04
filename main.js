@@ -20,8 +20,8 @@ var rankNamespace = function () {
             // switching to the main visualization tab
             if (currentTab != "#centerDiv") {
                 
-                d3.select("#dummyIcon").classed("hidden", true);
-                d3.select("#audioIcon").classed("hidden", true);
+                // Stop playing music and hide the icons
+                stopPlayer();
             } else {
                 
                 // Otherwise, let's reposition the stop icon (if applicable)
@@ -136,7 +136,6 @@ var rankNamespace = function () {
             playingSquare = null;
         }
         
-        
         // Shows the specified square's play icon and popover
         function showSquareDetails(ele) {
             
@@ -155,17 +154,20 @@ var rankNamespace = function () {
             d3.select(ele).style("display", "block")
                                 .style("cursor", "pointer");  
             
+            
             // Show the tooltip if not already
             if(!$('.popover').hasClass('in')) {
                 
                 $(ele).popover('show');
                 
-                // This fixes a bug where the tooltip doesn't appear correctly..
-                // Specifically when you are quickly entering a square
                 $(ele).on('shown.bs.popover', function() {
-
-                    if(ele == focusedSquare && !$('.popover').hasClass('in')) {
-                        $(ele).popover('show');
+                    
+                    $(this).off('shown.bs.popover');
+                    
+                    // This fixes a bug where the tooltip doesn't appear correctly..
+                    // Specifically when you are quickly entering a square
+                    if (this == focusedSquare && !$('.popover').hasClass('in')) {
+                        $(this).popover('show');
                     }
                 });
             }
@@ -259,6 +261,8 @@ var rankNamespace = function () {
             
             var xPos = window.pageXOffset + matrix.e + iWidth/2 - sWidth/2;
             var yPos = window.pageYOffset + matrix.f + iHeight/2 - sHeight/2;
+            
+            console.log("repositioning");
             
             d3.select("#audioIcon")
                     .style("opacity", 0.55)
@@ -436,11 +440,13 @@ var rankNamespace = function () {
                     .attr("height", yScale.rangeBand())
                     .style("fill", function(d) { return colors.gray; } )
                     .each(function(d, i){
-
+                        
                         // Popover (tooltip)
                         $(this).popover({
                             container: 'body',
-                            placement : +d.Year < 1995 ? "right" : "left",
+                            placement : function (tooltip, element) {
+                                return +d.Year < 1995 ? "right" : "left";
+                            },
                             delay: { "show": 100, "hide": 100 },
                             trigger: 'manual',
                             html : true,
@@ -511,7 +517,7 @@ var rankNamespace = function () {
                         }
                     })
                     .on("mouseover", function(d) {
-
+                        
                         var ele = d3.select(this);
 
                         // If grayed out, then hide the cursor hand and popover
@@ -529,7 +535,7 @@ var rankNamespace = function () {
                                 return null;
                             }
                         }
-
+                        
                         // Focus this square
                         focusedSquare = this;
 
@@ -539,10 +545,13 @@ var rankNamespace = function () {
                         }
                     })
                     .on("mouseout", function() {
-
+                        
                         // No square is being focused right now
                         focusedSquare = null;
-
+                        
+                        // Override function
+                        //$(this).on('shown.bs.popover', function() {});
+    
                         // Set the cursor to default
                         d3.select(this).style("cursor", "default");
 
@@ -550,8 +559,6 @@ var rankNamespace = function () {
                         d3.select("#dummyIcon").classed("hidden", true);
                         $(this).popover('hide');
                     });
-                
-            
             
             // URL Processing
 
@@ -773,6 +780,18 @@ var rankNamespace = function () {
         var lX = width + 25;
         var lY = height - lH;
         
+        // Stops the audio player
+        function stopPlayer() {
+            
+            playingSquare = null;
+            
+            d3.select("#audioIcon")
+                .classed("hidden", true);
+
+            d3.select("#player").attr("src", "");
+            document.getElementById('player').currentTime = 0;
+        }
+        
         // This function shows all the squares
         function showAllGenres(ref) {
             
@@ -947,13 +966,7 @@ var rankNamespace = function () {
                 // Stop the player if a different genre is selected
                 if (playingSquare != null && d3.select(playingSquare)[0][0].__data__.Genre != genre) {
 
-                    playingSquare = null;
-                    
-                    d3.select("#audioIcon")
-                        .classed("hidden", true);
-
-                    d3.select("#player").attr("src", "");
-                    document.getElementById('player').currentTime = 0;
+                    stopPlayer();
                 }
                 
                 // Show popularity button and text

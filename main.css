@@ -1,5 +1,6 @@
 body {
     background-color: rgb(241, 241, 241);
+    position: fixed;
 }
 
 .noSelect, h1, img, text {
@@ -8,6 +9,7 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
 
 /* Storyline */
 #storyline {

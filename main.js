@@ -246,7 +246,7 @@ var rankNamespace = function () {
         // This function repositions the stop icon (if necessary)
         function repositionStop() {
             
-            if (playingSquare == null) {
+            if (focusedSquare == null || playingSquare == null) {
                  return null;
             }
             
@@ -536,7 +536,7 @@ var rankNamespace = function () {
                             
                             // 'this' is the reference to this square
                             // And should be focused if applicable
-                            showAllGenres(this);
+                            // showAllGenres(this);
                             return null;
                         }
 

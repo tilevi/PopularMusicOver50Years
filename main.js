@@ -262,8 +262,6 @@ var rankNamespace = function () {
             var xPos = window.pageXOffset + matrix.e + iWidth/2 - sWidth/2;
             var yPos = window.pageYOffset + matrix.f + iHeight/2 - sHeight/2;
             
-            console.log("repositioning");
-            
             d3.select("#audioIcon")
                     .style("opacity", 0.55)
                     .attr("width", sWidth + "px")
@@ -452,13 +450,13 @@ var rankNamespace = function () {
                                 
                                     // This is a small fix to when the user is scrolling
                                     // Though, the visualization is meant to be viewed without scrolling
-                                    var scrollTop = $("body").scrollTop();
-                                    var scrollLeft = $("body").scrollLeft();
+                                    var scrollTop = $(window).scrollTop();
+                                    var scrollLeft = $(window).scrollLeft();
 
                                     if (scrollTop != 0 || scrollLeft != 0) {
 
-                                        scrollTop = $("body").scrollTop();
-                                        scrollLeft = $("body").scrollLeft();
+                                        scrollTop = $(window).scrollTop();
+                                        scrollLeft = $(window).scrollLeft();
 
                                         if (!(scrollTop == 0 && scrollLeft == 0) && focusedSquare == ele) {
                                             
@@ -501,8 +499,8 @@ var rankNamespace = function () {
                                                 // Wait 1 second before repositioning
                                                 setTimeout(function() {
                                                     
-                                                    scrollTop = $("body").scrollTop();
-                                                    scrollLeft = $("body").scrollLeft();
+                                                    scrollTop = $(window).scrollTop();
+                                                    scrollLeft = $(window).scrollLeft();
 
                                                     if (!(scrollTop == 0 && scrollLeft == 0) && focusedSquare == ele) {
                                                         

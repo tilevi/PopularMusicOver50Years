@@ -459,13 +459,13 @@ var rankNamespace = function () {
                                 
                                     // This is a small fix to when the user is scrolling
                                     // Though, the visualization is meant to be viewed without scrolling
-                                    var scrollTop = $(window).scrollTop();
-                                    var scrollLeft = $(window).scrollLeft();
-
+                                    var scrollTop = $(document).scrollTop();
+                                    var scrollLeft = $(document).scrollLeft();
+                                    
                                     if (scrollTop != 0 || scrollLeft != 0) {
 
-                                        scrollTop = $(window).scrollTop();
-                                        scrollLeft = $(window).scrollLeft();
+                                        scrollTop = $(document).scrollTop();
+                                        scrollLeft = $(document).scrollLeft();
 
                                         if (!(scrollTop == 0 && scrollLeft == 0) && focusedSquare == ele) {
                                             
@@ -508,8 +508,8 @@ var rankNamespace = function () {
                                                 // Wait before repositioning
                                                 setTimeout(function() {
                                                     
-                                                    scrollTop = $(window).scrollTop();
-                                                    scrollLeft = $(window).scrollLeft();
+                                                    scrollTop = $(document).scrollTop();
+                                                    scrollLeft = $(document).scrollLeft();
 
                                                     if (!(scrollTop == 0 && scrollLeft == 0) && focusedSquare == ele) {
                                                         

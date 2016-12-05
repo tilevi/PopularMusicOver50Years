@@ -532,8 +532,7 @@ var rankNamespace = function () {
                         
                         // If grayed out, then focus this square  
                         // and show all other genres
-                        
-                        if ($(this).css("fill") == colors.gray) {
+                        if (this.style.fill == colors.gray) {
                             
                             // 'this' is the reference to this square
                             // And should be focused if applicable
@@ -589,7 +588,7 @@ var rankNamespace = function () {
                         var ele = d3.select(this);
 
                         // If grayed out, then hide the cursor hand and popover
-                        if ($(this).css("fill") == colors.gray || songDetail[d.Title] == null) {
+                        if (this.style.fill == colors.gray || songDetail[d.Title] == null) {
 
                             ele.style("cursor", "default");
                             $(this).popover('hide');

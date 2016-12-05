@@ -189,27 +189,23 @@ hr {
 
 html, body {height: 100%;}
 
-#wrap {min-height: 100%;}
-
-#main {overflow:auto;
-	padding-bottom: 175px;}  /* must be same height as the footer */
-
-#footer {
-    background-color: gainsboro;
-    position: relative;
-	margin-top: -175px; /* negative value of footer height */
-	height: 175px;
-	clear:both;} 
-
-/*Opera Fix*/
-body:before {
-	content:"";
-	height:100%;
-	float:left;
-	width:0;
-	margin-top:-32767px;/
+.Site {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;  
+  min-height: 100vh;
+  flex-direction: column;
 }
 
+.Site-content {
+  flex: 1;
+}
+
+footer {
+    background-color: #e2e2e2;
+}
 
 /* Footer columns */
 .alignleft {

@@ -186,26 +186,30 @@ hr {
 
 
 /* Footer */
-
 html, body {height: 100%;}
 
-.Site {
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
-    display: flex;  
-    min-height: 100%;
-    flex-direction: column;
+#wrap {min-height: 100%;}
+
+#main {overflow:auto;
+    padding-bottom: 0px;}  /* must be same height as the footer */
+
+#footer {
+    background-color: gainsboro;
+    position: relative;
+    margin-top: -0px; /* negative value of footer height */
+    height: 0px;
+    clear:both;
+} 
+
+/*Opera Fix*/
+body:before {
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+    margin-top:-32767px;/
 }
 
-.Site-content {
-    flex: 1;
-}
-
-footer {
-    background-color: #e2e2e2;
-}
 
 /* Footer columns */
 .alignleft {

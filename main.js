@@ -497,7 +497,18 @@ var rankNamespace = function () {
                                             $(ele).on('shown.bs.popover', function() {
                                                 
                                                 $(this).off('shown.bs.popover');
-                                                fixPosition();
+                                                
+                                                // Wait 1 second before repositioning
+                                                setTimeout(function() {
+                                                    
+                                                    scrollTop = $("body").scrollTop();
+                                                    scrollLeft = $("body").scrollLeft();
+
+                                                    if (!(scrollTop == 0 && scrollLeft == 0) && focusedSquare == ele) {
+                                                        
+                                                        fixPosition();
+                                                    };
+                                                }, 1000);
                                             });
                                         }
                                     }
@@ -687,12 +698,12 @@ var rankNamespace = function () {
         // On window resize, reposition the stop icon and popover
         window.addEventListener('resize', function() {
             
-            if ($(focusedSquare) != null) {
-
-                $(focusedSquare).popover('show');
-            }
-            
             repositionStop();
+            
+            if (focusedSquare != null) {
+                
+                showSquareDetails(focusedSquare);
+            }
         });
     
         // This function converts the number of songs position 

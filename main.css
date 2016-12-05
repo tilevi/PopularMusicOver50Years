@@ -188,20 +188,17 @@ hr {
 /* Footer */
 
 .Site {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;  
-    display: -ms-flexbox;
-    min-height: 100vh;
+    display: flex;
     flex-direction: column;
+    height: 100vh; /* 1 */
 }
-
+.Site-header,
+.Site-footer {
+    background-color: gainsboro;
+    flex-shrink: 0; /* 2 */
+}
 .Site-content {
-  flex: 1;
-}
-
-footer {
-    background-color: #e2e2e2;
+    flex: 1 0 auto; /* 2 */
 }
 
 /* Footer columns */

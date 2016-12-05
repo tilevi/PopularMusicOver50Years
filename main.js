@@ -305,8 +305,10 @@ var rankNamespace = function () {
                         return "default";
                     }).style("fill", function(d) {
                         if (d.Genre == selectedGenre) {
+                            this.setAttribute('noPlay', 0);
                             return colorScale(selectedGenre);
                         }
+                        this.setAttribute('noPlay', 1);
                         return colors.gray;
                     }).interrupt().transition()
                     .duration(750)
@@ -326,6 +328,7 @@ var rankNamespace = function () {
             } else {
                 svg.selectAll(".square")
                     .style("fill", function() {
+                        this.setAttribute('noPlay', 1);
                         return colors.gray;
                     })
                     .attr("y", function(d, i) {
@@ -341,8 +344,10 @@ var rankNamespace = function () {
                         .call(transCB, function() {})
                         .style("fill", function(d, i) {
                             if (d.Genre == selectedGenre) {
+                                this.setAttribute('noPlay', 0);
                                 return colorScale(selectedGenre);
                             }
+                            this.setAttribute('noPlay', 1);
                             return colors.gray;
                         });
                     
@@ -436,7 +441,11 @@ var rankNamespace = function () {
                     .attr("class", "square")
                     .attr("width", xScale.rangeBand())
                     .attr("height", yScale.rangeBand())
-                    .style("fill", function(d) { return colors.gray; } )
+                    .style("fill", function(d) { 
+                        
+                        this.setAttribute('noPlay', 1);
+                        return colors.gray;
+                    } )
                     .each(function(d, i){
                         
                         // Popover (tooltip)
@@ -532,7 +541,7 @@ var rankNamespace = function () {
                         
                         // If grayed out, then focus this square  
                         // and show all other genres
-                        if (this.style.fill == colors.gray) {
+                        if (this.getAttribute("noPlay") == 1) {
                             
                             // 'this' is the reference to this square
                             // And should be focused if applicable
@@ -588,7 +597,7 @@ var rankNamespace = function () {
                         var ele = d3.select(this);
 
                         // If grayed out, then hide the cursor hand and popover
-                        if (this.style.fill == colors.gray || songDetail[d.Title] == null) {
+                        if (this.getAttribute("noPlay") == 1 || songDetail[d.Title] == null) {
 
                             ele.style("cursor", "default");
                             $(this).popover('hide');
@@ -682,7 +691,10 @@ var rankNamespace = function () {
                                         return i * 25;
                                     })
                                     .duration(250)
-                                    .style("fill", function(d, i) {return colorScale(d.Genre); });
+                                    .style("fill", function(d, i) {
+                                        this.setAttribute('noPlay', 0);
+                                        return colorScale(d.Genre);
+                                    });
                         }
                     }
                 }
@@ -815,8 +827,12 @@ var rankNamespace = function () {
                                         })
                                         .style("fill", function(d) {
                                             if (d.Genre == selectedGenre) {
+                                                
+                                                this.setAttribute('noPlay', 0);
                                                 return colorScale(selectedGenre);
                                             }
+                                            
+                                            this.setAttribute('noPlay', 1);
                                             return colors.gray;
                                         })
                                         .attr("y", function(d) {
@@ -936,6 +952,7 @@ var rankNamespace = function () {
                     return yScale(d.Rank);
                 })
                 .style("fill", function(d) {
+                    this.setAttribute('noPlay', 0);
                     return colorScale(d.Genre);
                 });
         }
@@ -1057,8 +1074,11 @@ var rankNamespace = function () {
                         })
                         .style("fill", function(d) {
                             if (d.Genre == genre) {
+                                this.setAttribute('noPlay', 0);
                                 return colorScale(genre);
                             }
+                            
+                            this.setAttribute('noPlay', 1);
                             return colors.gray;
                         });
                 }

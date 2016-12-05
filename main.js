@@ -83,7 +83,7 @@ var rankNamespace = function () {
         var height = 350;
 
         // Margin
-        var margin = {top: 15, right: 200, bottom: 50, left: 50};
+        var margin = {top: 15, right: 175, bottom: 50, left: 50};
         
         // Main SVG
         var svg = d3.select("#centerDiv").append("svg")
@@ -246,7 +246,7 @@ var rankNamespace = function () {
         // This function repositions the stop icon (if necessary)
         function repositionStop() {
             
-            if (focusedSquare == null || playingSquare == null) {
+            if (playingSquare == null) {
                  return null;
             }
             
@@ -505,7 +505,7 @@ var rankNamespace = function () {
                                                 
                                                 $(this).off('shown.bs.popover');
                                                 
-                                                // Wait 1 second before repositioning
+                                                // Wait before repositioning
                                                 setTimeout(function() {
                                                     
                                                     scrollTop = $(window).scrollTop();
@@ -513,9 +513,12 @@ var rankNamespace = function () {
 
                                                     if (!(scrollTop == 0 && scrollLeft == 0) && focusedSquare == ele) {
                                                         
-                                                        fixPosition();
-                                                    };
-                                                }, 1000);
+                                                        if(!$('.popover').hasClass('in')) {
+                                                            
+                                                            $(ele).popover("show");
+                                                        }
+                                                    }
+                                                }, 250);
                                             });
                                         }
                                     }
@@ -706,7 +709,7 @@ var rankNamespace = function () {
         });
         
         // On window resize, reposition the stop icon and popover
-        window.addEventListener('resize', function() {
+        $(window).resize(function() {
             
             repositionStop();
             

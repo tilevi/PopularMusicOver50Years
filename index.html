@@ -31,9 +31,14 @@
 
                     <div class="container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#centerDiv">Main Visualization</a></li>
-                            <li><a data-toggle="tab" href="#centerDiv2">Bar Chart</a></li>
+                            <li class="active"><a data-toggle="tab" href="#mainDiv">Main Visualization</a></li>
+                            <li><a data-toggle="tab" href="#rankDiv">Bar Chart</a></li>
                         </ul>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div id="mainDiv" class="tab-pane fade in active"></div>
+                        <div id="rankDiv" class="tab-pane fade"></div>
                     </div>
                 </center>
 
@@ -48,14 +53,7 @@
                     <source src="" type="audio/mpeg"/>
                     <source src="" type="audio/ogg"/>
                 </audio>
-
-                <center>
-                    <div class="tab-content">
-                        <div id="centerDiv" class="tab-pane fade in active"></div>
-                        <div id="centerDiv2" class="tab-pane fade"></div>
-                    </div>
-                </center>
-
+                
                 <script type="text/javascript" src="main.js"></script>
                 <script type="text/javascript" src="bar.js"></script>
 

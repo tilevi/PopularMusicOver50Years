@@ -118,12 +118,6 @@ hr {
 }
 
 
-/* Center DIVs */
-#centerDiv, #centerDiv2 {
-    overflow: hidden;
-    width: 100%;
-}
-
 /* Legend Text */
 .legendText {
     font-family: 'Lato', sans-serif;

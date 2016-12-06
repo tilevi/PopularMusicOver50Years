@@ -9,7 +9,7 @@ var ns = {};
 // Encapsulates the code to avoid conflicts
 var rankNamespace = function () {
 
-        var currentTab = "#centerDiv";
+        var currentTab = "#mainDiv";
         
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             
@@ -18,7 +18,7 @@ var rankNamespace = function () {
             
             // Hide the icons and stop audio player if we are not 
             // switching to the main visualization tab
-            if (currentTab != "#centerDiv") {
+            if (currentTab != "#mainDiv") {
                 
                 // Stop playing music and hide the icons
                 stopPlayer();
@@ -86,7 +86,7 @@ var rankNamespace = function () {
         var margin = {top: 15, right: 175, bottom: 50, left: 50};
         
         // Main SVG
-        var svg = d3.select("#centerDiv").append("svg")
+        var svg = d3.select("#mainDiv").append("svg")
                     .attr("width", width + margin.right + margin.left)
                     .attr("height", height + margin.top + margin.bottom)
                     .on("mousemove", function() {

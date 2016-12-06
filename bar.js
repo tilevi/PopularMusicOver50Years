@@ -44,7 +44,7 @@ var selectedGenre = "all";
 var grouped = false;
 
 // Main SVG
-var svg = d3.select("#centerDiv2").append("svg")
+var svg = d3.select("#rankDiv").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
         .append("g")

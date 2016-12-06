@@ -776,8 +776,12 @@ var rankNamespace = function () {
                             })
                             .on("click", function() {
                                 
+                                console.log("click");
+                                
                                 // Do not allow during a transition
                                 if (inTransition) {
+                                    
+                                    console.log("IN TRANSITION");
                                     return null;
                                 }
                                 

@@ -209,6 +209,26 @@ var rankNamespace = function () {
         }
         
         
+        // Called at the end of a transition
+        function selectHoveredSquare() {
+            
+            var element = document.elementFromPoint(mouseX, mouseY);
+               
+            // Make sure the element is not null
+            if (element != null) {
+
+                var sEle = d3.select(element)[0][0];
+
+                if (sEle != null && sEle.className != null && sEle.className.baseVal != null) {
+
+                    if (sEle.className.baseVal == "square") {
+
+                        focusedSquare = element;
+                        showSquareDetails(focusedSquare);
+                    }
+                }
+            }
+        }
         // Transition callback function
         function transCB(transition, callback) { 
             
@@ -228,25 +248,7 @@ var rankNamespace = function () {
                         
                         ////
                         
-                        var element = document.elementFromPoint(mouseX, mouseY);
-                        
-                        // Make sure the element is not null
-                        if (element != null) {
-                            
-                            var sEle = d3.select(element)[0][0];
-                            
-                            if (sEle != null && sEle.className != null && sEle.className.baseVal != null) {
-                                
-                                if (sEle.className.baseVal == "square") {
-                                    
-                                    focusedSquare = element;
-                                    showSquareDetails(focusedSquare);
-                                }
-                            }
-                        }
-                        
-                        ////
-                        
+                        selectHoveredSquare();
                         callback.apply(this, arguments);
                     }
                 });
@@ -263,7 +265,7 @@ var rankNamespace = function () {
             d3.select("#audioIcon").classed("hidden", false);
             
             var matrix = playingSquare.getScreenCTM()
-                                .translate(+ playingSquare.getAttribute("x"), + playingSquare.getAttribute("y"));
+                                .translate(+playingSquare.getAttribute("x"), +playingSquare.getAttribute("y"));
             
             var iWidth = playingSquare.getAttribute("width");
             var iHeight = playingSquare.getAttribute("height");
@@ -727,7 +729,29 @@ var rankNamespace = function () {
                 showSquareDetails(focusedSquare);
             }
         });
-    
+        
+        // This repositions the stop icon when scrolling horiz.
+        var recentScrollLeft = 0;
+        
+        $("#mainDiv").scroll(function() {
+            
+            var scrollLeft = $("#mainDiv").scrollLeft();
+            
+            if (recentScrollLeft != scrollLeft) {
+                
+                repositionStop();
+                
+                // Focus no square
+                focusedSquare = null;
+                
+                // Hide the play icon and popover
+                d3.select("#dummyIcon").classed("hidden", true);
+                $(".popover").popover('hide');
+                
+                recentScrollLeft = scrollLeft;
+            }
+        });
+        
         // This function converts the number of songs position 
         // to the rank position of a particular square
         function getCorrRank(element) {

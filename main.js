@@ -776,6 +776,11 @@ var rankNamespace = function () {
                             })
                             .on("click", function() {
                                 
+                                // Do not allow during a transition
+                                if (inTransition) {
+                                    return null;
+                                }
+                                
                                 // Set focused square to null
                                 focusedSquare = null;
                                 
@@ -878,6 +883,12 @@ var rankNamespace = function () {
         // This function shows all the squares
         function showAllGenres(ref) {
             
+            // Do not trigger during a transition
+            if (inTransition) {
+                
+                return null;
+            }
+            
             // If all squares are already shown, then return
             if (selectedGenre == "all") {
                 return null;
@@ -977,7 +988,7 @@ var rankNamespace = function () {
                         .style("cursor", "default");    
                 })
                 .on("click", function() {
-
+                
                     showAllGenres();
                 });
 

@@ -230,10 +230,19 @@ var rankNamespace = function () {
                         
                         var element = document.elementFromPoint(mouseX, mouseY);
                         
-                        if (d3.select(element)[0][0].className.baseVal == "square") {
+                        // Make sure the element is not null
+                        if (element != null) {
                             
-                            focusedSquare = element;
-                            showSquareDetails(focusedSquare);
+                            var sEle = d3.select(element)[0][0];
+                            
+                            if (sEle != null && sEle.className != null && sEle.className.baseVal != null) {
+                                
+                                if (sEle.className.baseVal == "square") {
+                                    
+                                    focusedSquare = element;
+                                    showSquareDetails(focusedSquare);
+                                }
+                            }
                         }
                         
                         ////

@@ -31,7 +31,7 @@ var rankNamespace = function () {
         
     
         // Booleans for transition and popularity
-        var inTransition = false;
+        var inTransition = true;
         var togglePopularity = false;
         
         // Selected genre
@@ -599,9 +599,7 @@ var rankNamespace = function () {
 
                             // Set the player's source
                             player.attr("src", URL);
-
-                            // Set the player's volume to 50 percent
-                            document.getElementById("player").volume = 0.5;
+                            
                             // Finally, play the audio
                             document.getElementById('player').play();
                         }
@@ -702,9 +700,9 @@ var rankNamespace = function () {
                                 .transition()
                                     .call(transCB, function() {})
                                     .delay(function(d, i) {
-                                        return i * 25;
+                                        return i * 15;
                                     })
-                                    .duration(250)
+                                    .duration(200)
                                     .style("fill", function(d, i) {
                                         this.setAttribute('noPlay', 0);
                                         return colorScale(d.Genre);
